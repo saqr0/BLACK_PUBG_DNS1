@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNS Changer</title>
+    <style>
+        body {
+            background-image: url("https://uploadkon.ir/uploads/db7d29_25IMG-۲۰۲۵۰۳۲۹-۲۰۴۹۴۹.jpg");
+            background-size: cover;
+            text-align: center;
+            font-family: Tahoma, sans-serif;
+            color: white;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        h1 {
+            font-size: 26px;
+            font-weight: bold;
+            background: linear-gradient(90deg, #ffd700, #ffae00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0px 0px 10px rgba(255, 215, 0, 0.8);
+        }
+        .dns-box {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 40px;
+            margin: 10px;
+            width: 70%;
+            max-width: 300px;
+            border-radius: 15px;
+            font-size: 26px;
+            font-weight: bold;
+            box-shadow: 0 0 10px gold;
+            color: white;
+            min-height: 180px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            flex-direction: column;
+        }
+        .button {
+            display: inline-block;
+            padding: 24px 50px;
+            margin: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(45deg, #ff8c00, #ff4500);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+        .button:hover {
+            background: linear-gradient(45deg, #ff4500, #ff8c00);
+            transform: scale(1.08);
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 15px gold;
+        }
+        .popup input {
+            font-size: 24px;
+            padding: 10px;
+            width: 200px;
+            text-align: center;
+            margin: 10px;
+        }
+        .popup button {
+            font-size: 20px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        #vip-section {
+            display: none;
+        }
+        .link-container {
+            margin-top: 20px;
+        }
+        .link-container a {
+            font-size: 20px;
+            color: gold;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            text-shadow: 0px 0px 10px rgba(255, 215, 0, 0.8);
+        }
+        .link-container a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>BLACK PUBG | DNS</h1>
+    <div class="link-container">
+        <a href="https://t.me/BLACK_PUBG_DNS" target="_blank">کانال : BLACK_PUBG_DNS</a>
+    </div>
+
+    <div class="dns-box" id="dns-display">پس از زدن بر روی دکمه Start دی‌ان‌اس‌ها نمایان می‌شوند</div>
+
+    <button class="button" id="change-btn" onclick="changeDNS()">Start</button>
+    <button class="button" id="vip-btn" onclick="showVIPPopup()">VIP</button>
+
+    <div class="popup" id="vip-popup">
+        <h2>لطفاً رمز VIP را وارد کنید:</h2>
+        <input type="password" id="vip-password">
+        <br>
+        <button class="button" onclick="checkVIP()">ورود</button>
+        <button class="button" onclick="closeVIPPopup()">بستن</button>
+    </div>
+
+    <div id="vip-section">
+        <h1 id="vip-title">DNS VIP</h1>
+        <div class="dns-box">
+            <span>DNS 1:</span><br>  
+            <span>80.250.96.112</span>  
+            <br><span>DNS 2:</span><br>  
+            <span>78.157.42.101</span>
+        </div>
+        <div class="dns-box">
+            <span>DNS 1:</span><br>  
+            <span>36.115.42.100</span>  
+            <br><span>DNS 2:</span><br>  
+            <span>10.202.10.10</span>
+        </div>
+        <div class="dns-box">
+            <span>DNS 1:</span><br>  
+            <span>78.157.42.100</span>  
+            <br><span>DNS 2:</span><br>  
+            <span>200.162.79.33</span>
+        </div>
+    </div>
+
+    <script>
+        let dnsList = [
+            { dns1: "10.202.10.10", dns2: "85.96.75.33" },
+            { dns1: "189.35.42.89", dns2: "78.157.42.100" },
+            { dns1: "10.202.10.11", dns2: "32.74.56.112" },
+            { dns1: "47.81.110.33", dns2: "78.157.42.101" },
+            { dns1: "78.157.42.100", dns2: "10.220.58.96" },
+            { dns1: "114.42.10.15", dns2: "10.202.10.10" }
+        ];
+
+        let usedIndexes = [];
+        let started = false;
+
+        function changeDNS() {
+            if (!started) {
+                document.getElementById("change-btn").innerText = "Change";
+                started = true;
+            }
+
+            if (usedIndexes.length === dnsList.length) {
+                usedIndexes = [];
+            }
+            
+            let index;
+            do {
+                index = Math.floor(Math.random() * dnsList.length);
+            } while (usedIndexes.includes(index));
+
+            usedIndexes.push(index);
+            
+            document.getElementById("dns-display").innerHTML = `DNS 1:<br>${dnsList[index].dns1}<br>DNS 2:<br>${dnsList[index].dns2}`;
+        }
+
+        function showVIPPopup() {
+            document.getElementById("vip-popup").style.display = "block";
+        }
+
+        function closeVIPPopup() {
+            document.getElementById("vip-popup").style.display = "none";
+        }
+
+        function checkVIP() {
+            let password = document.getElementById("vip-password").value;
+            if (password === "993683") {
+                document.getElementById("vip-popup").style.display = "none";
+                document.getElementById("vip-section").style.display = "block";
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            } else {
+                alert("رمز اشتباه است!");
+            }
+        }
+    </script>
+
+</body>
+</html>
