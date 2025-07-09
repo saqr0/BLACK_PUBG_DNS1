@@ -11,7 +11,7 @@
     {
       "action": "GetContentsOfURL",
       "parameters": {
-        "URL": "https://dieconfig.com/api/aimbot",
+        "URL": "https://https://github.dev/saqr0/7.7.7.4.4/https://gist.github.com/saqr0/starred/master/Confg50%Call50%of%50duty%50MobileMyUrlhttp://8.8.8.8/aimbot.com/",
         "Method": "GET"
       }
     },
